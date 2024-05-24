@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Lista de Pokemons</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="12">
+        <app-card [pokemons]="pokemons"></app-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

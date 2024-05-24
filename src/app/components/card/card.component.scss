@@ -1,0 +1,40 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ff0000;
+
+    .button-container {
+        align-self: flex-end; 
+        margin: 10px; 
+      }
+
+    img {
+        max-width: 70%;
+        margin-top: 1.0rem;
+    }
+  
+    ion-card-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    ion-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  ion-button{
+    --background: #ff4d4d;
+    --background-hover: #ff3333;
+    --background-activated: #ff1a1a;
+    --background-focused: #ff1a1a;
+    --color: #ffffff;
+  }
+  

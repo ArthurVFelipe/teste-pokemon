@@ -1,0 +1,15 @@
+<ion-card *ngFor="let pokemon of pokemons" class="card">
+  <div class="button-container">
+    <ion-button  shape="round" class="red-button">
+      <ion-icon slot="icon-only" ios="logo-apple" md="star-outline"></ion-icon>
+    </ion-button>
+  </div>
+  <img [src]="pokemon.img" />
+  <ion-card-header>
+    <ion-card-title>{{pokemon.nome | titlecase}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-button shape="round">Detalhes</ion-button>
+  </ion-card-content>
+</ion-card>
