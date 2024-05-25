@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { CardComponent } from './components/card/card.component';
 
 const routes: Routes = [
   {
@@ -11,10 +10,6 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },
-  {
-    path: 'detalhes',
-    loadChildren: () => import('./detalhes/detalhes.module').then( m => m.DetalhesPageModule)
   },
   {
     path: 'favoritos',

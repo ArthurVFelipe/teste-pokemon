@@ -10,6 +10,6 @@ export class PokemonService {
   constructor(private http: HttpClient) { }
 
   getPokemon(){
-    return this.http.get(`${this.baseUrl}pokemon?offset=0&limit=6`);
+    return this.http.get(`${this.baseUrl}pokemon?offset=0&limit=150`);
   }
 }
