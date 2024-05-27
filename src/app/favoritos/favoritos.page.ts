@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { PokemonService } from '../services/pokemon.service';
 
 @Component({
   selector: 'app-favoritos',
   templateUrl: './favoritos.page.html',
   styleUrls: ['./favoritos.page.scss'],
 })
-export class FavoritosPage implements OnInit {
+export class FavoritosPage {
+  public pokemons:any = [];
+  constructor(private service: PokemonService) { }
 
-  constructor() { }
+  ionViewWillEnter() {
+    this.getPokemons();
+  }
 
-  ngOnInit() {
+  getPokemons(){
+    this.pokemons = this.service.getPokemonsFavoritos();
   }
 
 }

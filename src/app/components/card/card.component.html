@@ -10,6 +10,19 @@
     <ion-card-title>{{pokemon.nome | titlecase}}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <ion-button shape="round">Detalhes</ion-button>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="auto">
+          <p><strong>Altura:</strong> {{pokemon.detalhes.altura}}</p>
+          <p><strong>Peso:</strong> {{pokemon.detalhes.peso}}</p>
+          <p><strong>Vida:</strong> {{pokemon.detalhes.hp}}</p>
+        </ion-col>
+        <ion-col size="auto">
+          <p><strong>Ataque:</strong> {{pokemon.detalhes.ataque}}</p>
+          <p><strong>Defesa:</strong> {{pokemon.detalhes.defesa}}</p>
+          <p><strong>Velocidade:</strong> {{pokemon.detalhes.velocidade}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid> 
   </ion-card-content>
 </ion-card>

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PokemonService } from '../services/pokemon.service';
-
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-lista',
@@ -9,55 +9,85 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
   styleUrls: ['./lista.page.scss'],
 })
 export class ListaPage implements OnInit {
-  private UrlSvg: String = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/';
-  public pokemons: any = [];
+  private UrlSvg: string = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/';
+  public pokemons: any[] = [];
   private pageNumber: number = 1;
-  infiniteScroll: any;
-  
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll | undefined;
+
   constructor(private service: PokemonService) { }
 
   ngOnInit() {
-    this.loadPokemons();
+    this.getPokemons();
   }
 
-  loadPokemons() {
+  getPokemons() {
+    let savedPokemons = localStorage.getItem('pokemons');
+    if (!savedPokemons || savedPokemons === '[]') {
+      this.service.getPokemon().subscribe(
+        (data: any) => {
+          let pokemons: any[] = [];
+          data.results.forEach((e: any) => {
+            let id = e.url.split('/')[6];
+            this.getDetalhes(id).subscribe((detalhes: any) => {
+              let pokemon: any = {
+                'id': id,
+                'nome': e.name,
+                'img': this.UrlSvg + id + '.svg',
+                'favorito': false,
+                'detalhes': detalhes
+              };
+              pokemons.push(pokemon);
+              if (pokemons.length === data.results.length) {
+                localStorage.setItem('pokemons', JSON.stringify(pokemons));
+                this.pokemons = pokemons;
+                this.loadPokemons(true);
+              }
+            });
+          });
+        }
+      );
+    } else {
+      this.pokemons = JSON.parse(savedPokemons);
+      this.loadPokemons(true);
+    }
+  }
+  
+  getDetalhes(id: number){
+    return this.service.getDetalhes(id).pipe(
+      map((data: any) => {
+        return {
+          "altura": data.height,
+          "peso": data.weight,
+          "hp": data.stats[0].base_stat,
+          "ataque": data.stats[1].base_stat,
+          "defesa": data.stats[2].base_stat,
+          "velocidade": data.stats[5].base_stat
+        };
+      })
+    );
+  }
+
+  loadPokemons(reset: boolean = false) {
     let savedPokemons = localStorage.getItem('pokemons');
     if (savedPokemons) {
       let allPokemons = JSON.parse(savedPokemons);
-      const batchSize = 6;
-      const start = (this.pageNumber - 1) * batchSize;
-      const end = start + batchSize;
-      
-      let pokemonsBatch = allPokemons.slice(start, end);
-      this.pokemons = this.pokemons.concat(pokemonsBatch);
-      
-      if (this.pokemons.length >= allPokemons.length) {
-        this.infiniteScroll.disabled = true;
+      const size = 6;
+      const start = (this.pageNumber - 1) * size;
+      const end = start + size;
+  
+      let pokemonArray = allPokemons.slice(start, end);
+      if (reset) {
+        this.pokemons = pokemonArray;
+      } else {
+        this.pokemons = this.pokemons.concat(pokemonArray);
       }
-
-      return;
+  
+      if (this.infiniteScroll) {
+        this.infiniteScroll.disabled = this.pokemons.length >= allPokemons.length;
+      }
     }
-  
-    this.service.getPokemon().subscribe(
-      (data: any) => {
-        data.results.forEach((e: any) => {
-          let id = e.url.split('/')[6];
-          let pokemon: any = {
-            'id':  id,
-            'nome': e.name,
-            'img': this.UrlSvg + id + '.svg',
-            'favorito': false
-          };
-          
-          this.pokemons.push(pokemon);
-        });
-  
-        this.saveToLocalStorage();
-      }
-    );
-    
   }
-  
+
   loadMore(event: any) {
     this.pageNumber++;
     this.loadPokemons();
@@ -65,21 +95,19 @@ export class ListaPage implements OnInit {
   }
 
   toggleFavorito(pokemon: any) {
-    let pokemonIndex = this.pokemons.findIndex((p: any) => p.id === pokemon.id);
-    if (pokemonIndex !== -1) {
-      this.pokemons[pokemonIndex].favorito = !this.pokemons[pokemonIndex].favorito;
-      this.saveToLocalStorage();
-    }
+    let pokemonStorage = JSON.parse(localStorage.getItem('pokemons') || '[]');
+
+    this.pokemons = this.updateFavorito(this.pokemons, pokemon);
+
+    let updatedStorage = this.updateFavorito(pokemonStorage, pokemon);
+    localStorage.setItem('pokemons', JSON.stringify(updatedStorage));   
   }
 
-  saveToLocalStorage() {
-    localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
-  }
-
-  loadFavoritosFromLocalStorage() {
-    let savedPokemons = localStorage.getItem('pokemons');
-    if (savedPokemons) {
-      this.pokemons = JSON.parse(savedPokemons);
+  updateFavorito(list: any[], pokemon: any){
+    let index = list.findIndex((p: any) => p.id === pokemon.id);
+    if (index !== -1) {
+      list[index].favorito = !list[index].favorito;
     }
+    return list;
   }
 }
