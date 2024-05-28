@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-detalhes-modal',
   templateUrl: './detalhes-modal.component.html',
   styleUrls: ['./detalhes-modal.component.scss'],
 })
-export class DetalhesModalComponent  implements OnInit {
+export class DetalhesModalComponent implements OnInit{
 
-  constructor() { }
+  public pokemon: any;
 
-  ngOnInit() {}
+  constructor(
+    private modalCrtl: ModalController,
+    private params: NavParams
+  ) { }
+
+  ngOnInit() {
+    this.pokemon = this.params.get('pokemon');
+  }
+
+  close(){
+    this.modalCrtl.dismiss();
+  }
 
  
 }

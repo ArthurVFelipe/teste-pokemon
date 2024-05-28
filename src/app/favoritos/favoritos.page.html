@@ -1,9 +1,29 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Favoritos</ion-title>
+    <ion-title>Lista de Favoritos</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <div class="example-content">Listen now content</div>
-  <p *ngFor="let pokemon of pokemons">{{pokemon.nome}}</p>
+
+<ion-content [fullscreen]="true">
+  <ion-grid [fixed]="true">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12">
+        <ion-list>
+          <ion-row>
+            <ng-container *ngIf="pokemons.length > 0; else vazioPokemons">
+              <ion-col size-sm="6" size-md="4" sizeXs="12"  *ngFor="let pokemon of pokemons; let index">
+                <app-card  [pokemon]="pokemon" (favoritoToggled)="toggleFavorito($event)"></app-card>
+              </ion-col>
+            </ng-container>
+            <ng-template #vazioPokemons>
+              <div class="ion-text-center">
+                <h1>Você não tem Pokemons Favoritos!</h1>
+              </div>
+            </ng-template>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+

@@ -7,6 +7,7 @@ import { ListaPageRoutingModule } from './lista-routing.module';
 
 import { ListaPage } from './lista.page';
 import { CardModule } from '../components/card/card.module';
+import { DetalhesModalModule } from '../components/detalhes-modal/detalhes-modal.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { CardModule } from '../components/card/card.module';
     FormsModule,
     IonicModule,
     ListaPageRoutingModule,
-    CardModule
+    CardModule,
+    DetalhesModalModule
   ],
   declarations: [ListaPage]
 })

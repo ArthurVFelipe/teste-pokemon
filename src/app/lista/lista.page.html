@@ -7,9 +7,13 @@
 <ion-content [fullscreen]="true">
   <ion-grid [fixed]="true">
     <ion-row class="ion-justify-content-center">
-      <ion-col size-md="12">
+      <ion-col size="12">
         <ion-list>
-          <app-card *ngFor="let pokemon of pokemons; let index" [pokemon]="pokemon" (favoritoToggled)="toggleFavorito($event)"></app-card>
+          <ion-row>
+            <ion-col size-sm="6" size-md="4" sizeXs="12"  *ngFor="let pokemon of pokemons; let index">
+              <app-card  [pokemon]="pokemon" (favoritoToggled)="toggleFavorito($event)"></app-card>
+            </ion-col>
+          </ion-row>
         </ion-list>
         <ion-infinite-scroll (ionInfinite)="loadMore($event)">
           <ion-infinite-scroll-content></ion-infinite-scroll-content>
