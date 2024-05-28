@@ -8,6 +8,7 @@ import { ListaPageRoutingModule } from './lista-routing.module';
 import { ListaPage } from './lista.page';
 import { CardModule } from '../components/card/card.module';
 import { DetalhesModalModule } from '../components/detalhes-modal/detalhes-modal.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { DetalhesModalModule } from '../components/detalhes-modal/detalhes-modal
     IonicModule,
     ListaPageRoutingModule,
     CardModule,
-    DetalhesModalModule
+    DetalhesModalModule,
+    NgxPaginationModule
   ],
   declarations: [ListaPage]
 })

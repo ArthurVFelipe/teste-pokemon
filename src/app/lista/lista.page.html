@@ -10,14 +10,14 @@
       <ion-col size="12">
         <ion-list>
           <ion-row>
-            <ion-col size-sm="6" size-md="4" sizeXs="12"  *ngFor="let pokemon of pokemons; let index">
-              <app-card  [pokemon]="pokemon" (favoritoToggled)="toggleFavorito($event)"></app-card>
+            <ion-col size-sm="6" size-md="4" sizeXs="12" *ngFor="let pokemon of pokemons | paginate: { itemsPerPage: pageSize, currentPage: pageNumber }">
+              <app-card [pokemon]="pokemon" (favoritoToggled)="toggleFavorito($event)"></app-card>
             </ion-col>
           </ion-row>
         </ion-list>
-        <ion-infinite-scroll (ionInfinite)="loadMore($event)">
-          <ion-infinite-scroll-content></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
+        <div class="ion-text-center ion-justify-content-center">
+          <pagination-controls class="pagination" (pageChange)="pageChanged($event)"></pagination-controls>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

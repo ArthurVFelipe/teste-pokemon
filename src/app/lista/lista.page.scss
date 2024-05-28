@@ -1,0 +1,21 @@
+.pagination ::ng-deep{
+    .ngx-pagination .current {
+        background: #ff0000;
+    }
+
+    ul > li.disabled {
+        display: none !important;
+    }
+
+    ul > li:not(.active) > a {
+        color: #fff;
+    }
+
+    ul > li:not(.current) > a:hover {
+        background: #ff0000; 
+        color: #fff; 
+      }
+   
+}
+
+
