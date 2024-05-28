@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PokemonService } from '../services/pokemon.service';
 import { map } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { forkJoin, Observable } from 'rxjs';
   templateUrl: './lista.page.html',
   styleUrls: ['./lista.page.scss'],
 })
-export class ListaPage implements OnInit {
+export class ListaPage {
   private UrlSvg: string = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/';
   public pokemons: any[] = [];
   public paginatedPokemons: any[] = [];
@@ -17,7 +17,7 @@ export class ListaPage implements OnInit {
 
   constructor(private service: PokemonService) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.getPokemons();
   }
 
