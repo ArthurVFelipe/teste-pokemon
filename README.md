@@ -56,6 +56,12 @@ ionic serve
 ```
 O aplicativo será aberto automaticamente em [http://localhost:8100](http://localhost:8100)
 
+### 4 - Execute o aplicativo no seu Android:
+Na pasta raiz do projeto, baixe este arquivo
+```
+app-debug.apk
+```
+
 ## Desenvolvedor
 
 <table>
